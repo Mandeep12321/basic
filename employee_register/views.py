@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .models import User
 from django.contrib.auth.hashers import make_password
+import os
 # Create your views here.
 def RegistrationView(request):
 
@@ -11,8 +12,6 @@ def RegistrationView(request):
         myuser.email = request.POST.get('email')
         myuser.img = request.FILES.get('image')
         myuser.password = make_password('password')
-
-
 
         myuser.save()
         return redirect('/employee/list')
@@ -32,11 +31,16 @@ def employee_update(request,id):
     employee = User.objects.get(pk=id)
 
     if (request.method == 'POST'):
+
+        if (request.FILES.get('image',None)):
+            img = request.FILES['image'];
+            employee.img = img
         employee.first_name = request.POST.get('first_name')
         employee.last_name = request.POST.get('last_name')
         employee.email = request.POST.get('email')
-        employee.img = request.POST.get('image')
+
         employee.save()
+        return redirect("/employee/list/")
 
     return render(request, "register.html",{'employee':employee})
 
