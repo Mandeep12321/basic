@@ -14,6 +14,8 @@
         <tr>
             <td>First_Name</td>
             <td>Last_Name</td>
+            <td>Gender</td>
+            <td>Hobbies</td>
             <td>Email</td>
             <td>image</td>
             <td>
@@ -27,9 +29,13 @@
     </thead>
     <tbody>
         {% for employee in employee_list %}
+
             <tr>
                 <td>{{employee.first_name}}</td>
                 <td>{{employee.last_name}}</td>
+                <td>{% if employee.gender == '1' %} Male {% elif employee.gender == '0' %} Female {% endif %}  </td>
+                <td>{% for hobby in employee.Hobbies%}{% if hobby == '1'%} cricket,{% elif hobby == '2'%} kabbadi,{% elif hobby == '3'%} Football, {% elif hobby == '4'%} Hockey {% endif %}  {% endfor %}</td>
+
                 <td>{{employee.email}}</td>
                 <td>{{employee.img}}</td>
                 <td><img  {% if employee.img != '' %} src ="{{ employee.img.url}}"  {% else %} src = "{% static 'img/download.png' %}" {% endif %} width = "40px" height="40px">

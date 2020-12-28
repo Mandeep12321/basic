@@ -7,12 +7,16 @@ def RegistrationView(request):
 
     if request.method == 'POST':
         myuser = User()
+        print(request.POST)
         myuser.first_name = request.POST.get('first_name')
         myuser.last_name = request.POST.get('last_name')
+        myuser.gender = request.POST.get('gender')
+        myuser.Hobbies = request.POST.getlist('Hobbies')
         myuser.email = request.POST.get('email')
         myuser.img = request.FILES.get('image')
+        myuser.country = request.POST.get('country')
         myuser.password = make_password('password')
-
+        print(myuser.Hobbies)
         myuser.save()
         return redirect('/employee/list')
 
@@ -29,6 +33,7 @@ def employee_delete(request,id):
 def employee_update(request,id):
 
     employee = User.objects.get(pk=id)
+    print(employee.Hobbies)
 
     if (request.method == 'POST'):
 
@@ -38,6 +43,8 @@ def employee_update(request,id):
         employee.first_name = request.POST.get('first_name')
         employee.last_name = request.POST.get('last_name')
         employee.email = request.POST.get('email')
+        employee.gender = request.POST.get('gender')
+        employee.Hobbies = request.POST.getlist('Hobbies')
 
         employee.save()
         return redirect("/employee/list/")
